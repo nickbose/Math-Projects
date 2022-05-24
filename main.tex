@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+
+\title{ODE Project: Tunneling by Ants}
+\author{Nicholas Bose }
+\date{May 1, 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Background Problem}
+A.E.G.I.S, a super secret branch of the government wanted to know how long it takes for an ant to dig a tunnel through a wall. Half of the team thinks 2 ants digging from one side of the wall is better, while the other half thinks the both ants dig on both ends of the wall. The question arises on how long it takes an ant and whether one half of the team is right than other. 
+\section{Developing an ODE}
+First thing we would do is define terms to build the mathematical model. We let $T(x)$ be the time it takes an ant to build a tunnel of length x. We know that the ant can only remove the soil in increments in which the ant has to carry the soil back to the tunnel entrance, and return back to remove more. We assume $h$ to be the amount of soil that can removed in increments by the ant. From this we get $T(x+h) - T(x)$, but we needed to take a guess on a solution. Here were some of the guesses.
+\begin{itemize}
+    \item $T(x+h) - T(x) = \alpha x + h$
+    \item $T(x+h) - T(x) = \alpha xh $
+\end{itemize}
+We take a guess $T(x+h) - T(x) = \alpha xh$ because from this we get the ODE, $T'(x) = \frac{T(x+h) - T(x)}{h} = \alpha x$ with an initial condition of $T(0) = 0$. 
+
+\section{Solve the ODE}
+Now we solve the ODE using the Laplace Transform:
+\begin{align*}
+    T'(x) = \alpha x \\
+    L[T'(x)] = L[\alpha x] \\
+    sL[T(x)] - T(0) = L[\alpha x] \\
+    sL[T(x)] = \alpha L[x] \\
+    L[T(x)] = \frac{\alpha}{s} L[x] \\
+    L[T(x)] = (\frac{\alpha}{s})(\frac{1}{s^{2}}) \\
+    L[T(x)] = \frac{\alpha}{s^{3}} \\
+    T(x) = L^{-1}[\frac{\alpha}{s^{3}}] \\
+    T(x) = L^{-1}[\frac{\alpha}{2} \frac{2}{s^{3}}] \\
+    T(x) = \frac{\alpha}{2} L^{-1}[\frac{2}{s^{3}}] \\
+    T(x) = (\frac{\alpha}{2})(x^{2})
+\end{align*}
+From this, we solve the ODE to be $(\frac{\alpha}{2})(x^{2})$.
+\section{Addressing the Problem}
+Now, we know that the time for one ant to build a tunnel can be modelled from the solution of the ODE. From this, we understand that the two ants working on both sides will just make the time to make the tunnel, will be shorter than one ant. On the other hand, one ant on each side means that each ant only has to do half the length of the tunnel. Thus, we decided to say that having each ant on both sides is faster than having two ants on one side because each ant only has to complete half the tunnel in $\frac{1}{4}$ the time, hence the decision.
+\begin{thebibliography}
+\bibitem{Differential Equations: A Tool for Modeling the World},
+Kurt Bryan (2021), SIMIODE, Cornwall, NY
+\end{thebibliography}
+\end{document}
